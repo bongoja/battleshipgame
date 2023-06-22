@@ -88,6 +88,6 @@ while animating:
 
 
 
-        #update screen
+        #update screen 1
 
         pygame.display.flip()
