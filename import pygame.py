@@ -17,7 +17,7 @@ EKRAN = pygame.display.set_mode((SZEROKOSC, WYSOKOSC))
 NIEBIESKI = (176, 196, 222)
 SZARY = (112, 128, 144)
 
-#funkcja która rysuje kratkę
+#funkcja która planszę
 def draw_grid(left = 0, top = 0):
     for i in range(100):
         x = left + i % 10 * ROZMIAR_PLANSZY
