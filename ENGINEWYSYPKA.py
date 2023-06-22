@@ -36,12 +36,12 @@ class Player:
                 possible = True
                 for i in ship.indexes:
                     #indexy muszą być mniejsze niz 100
-                    if i>=100:
+                    if i >= 100:
                         possible = False
                         break
                     #statki nie mogą zachowywać się jak snake
-                    new_row = 1 // 10
-                    new_col = 1 % 10
+                    new_row = i // 10
+                    new_col = i % 10
                     if new_row != ship.row and new_col != ship.col:
                         possible = False
                         break

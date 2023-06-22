@@ -5,14 +5,14 @@ pygame.init()
 
 pygame.display.set_caption("Gra w statki")
 
-ROZMIAR_PLANSZY = 45
-POZIOMY_MARGINES = ROZMIAR_PLANSZY * 4
-PIONOWY_MARGINES = ROZMIAR_PLANSZY 
+SQ_SIZE= 45
+H_MARGIN = SQ_SIZE * 4
+V_MARGIN = SQ_SIZE 
 
-SZEROKOSC = ROZMIAR_PLANSZY * 10 * 2 + POZIOMY_MARGINES
-WYSOKOSC = ROZMIAR_PLANSZY * 10 * 2 + PIONOWY_MARGINES
+WIDTH = SQ_SIZE * 10 * 2 + H_MARGIN
+HEIGHT = SQ_SIZE * 10 * 2 + V_MARGIN
 
-EKRAN = pygame.display.set_mode((SZEROKOSC, WYSOKOSC))
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 NIEBIESKI = (176, 196, 222)
 SZARY = (112, 128, 144)
@@ -20,10 +20,10 @@ SZARY = (112, 128, 144)
 #funkcja która planszę
 def draw_grid(left = 0, top = 0):
     for i in range(100):
-        x = left + i % 10 * ROZMIAR_PLANSZY
-        y = top + i // 10 * ROZMIAR_PLANSZY
-        PLANSZA = pygame.Rect(x, y, ROZMIAR_PLANSZY, ROZMIAR_PLANSZY)
-        pygame.draw.rect(EKRAN, SZARY, PLANSZA, width = 3)
+        x = left + i % 10 * SQ_SIZE
+        y = top + i // 10 * SQ_SIZE
+        square = pygame.Rect(x, y, SQ_SIZE, SQ_SIZE)
+        pygame.draw.rect(SCREEN, SZARY, square, width = 3)
 
 
 animating=True
@@ -47,15 +47,15 @@ while animating:
 
 
         if not pausing:
-            EKRAN.fill(NIEBIESKI)
+            SCREEN.fill(NIEBIESKI)
 
         #rysowanie ,,szukającej'' planszy
         draw_grid()
-        draw_grid(left = (SZEROKOSC-POZIOMY_MARGINES)//2 + POZIOMY_MARGINES, top = (WYSOKOSC-PIONOWY_MARGINES)//2 + PIONOWY_MARGINES)
+        draw_grid(left = (WIDTH-H_MARGIN)//2 + H_MARGIN, top = (HEIGHT-V_MARGIN)//2 + V_MARGIN)
        
         #rysowanie planszy pozycyjnej
-        draw_grid(top = (WYSOKOSC-PIONOWY_MARGINES)//2 + PIONOWY_MARGINES)
-        draw_grid(left = (SZEROKOSC-POZIOMY_MARGINES)//2 + POZIOMY_MARGINES)
+        draw_grid(top = (HEIGHT-V_MARGIN)//2 + V_MARGIN)
+        draw_grid(left = (WIDTH-H_MARGIN)//2 + H_MARGIN)
         
 
 
