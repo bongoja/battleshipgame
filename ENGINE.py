@@ -23,7 +23,7 @@ class Player:
         self.place_ships(sizes = [5,4,3,3,2])
         lists_of_lists_of_indexes = [ship.indexes for ship in self.ships]
         print(lists_of_lists_of_indexes)
-        
+
     def place_ships(self, sizes):
         for size in sizes:
             placed = False
@@ -50,14 +50,17 @@ class Player:
                         possible = False
                         break
             #umieść statek
-            if possible:
-                self.ships.append(ship)
-                placed = True
-p=Player()
-for ship in p.ships:
-    print(ship.indexes)
+        if possible:
+            self.ships.append(ship)
+            placed = True
+    
+    def show_ships(self):
+        indexes = []
 
-    #18:46
+
+            
+p=Player()
+print(p.lists_of_lists_of_indexes)
 
 
 
