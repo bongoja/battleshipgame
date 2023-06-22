@@ -16,12 +16,14 @@ class Ship:
         elif self.orientation == "v":
             return [start_index + i * 10 for i in range(self.size)]
         
-class Player
+class Player:
     def __init__(self):
         self.ships = []
         self.search = ["U" for i in range(100)] #u for unknown
         self.place_ships(sizes = [5,4,3,3,2])
-    
+        lists_of_lists_of_indexes = [ship.indexes for ship in self.ships]
+        print(lists_of_lists_of_indexes)
+        
     def place_ships(self, sizes):
         for size in sizes:
             placed = False
@@ -32,8 +34,8 @@ class Player
                 possible = True
                 for i in ship.indexes: 
                 #indexy muszą być mniejsze od 100
-                if i >= 100:
-                    possible = False
+                    if i >= 100:
+                        possible = False
                     break
             #statki nie mogą się zachowywać jak Snake
                 new_row = i // 10
@@ -42,7 +44,7 @@ class Player
                     possible == False
                     break
             #statki nie mogą się przecinać:
-                 for other_ship in self.ships:
+            for other_ship in self.ships:
                 #wiemy ze jest zajety przez inny statek
                     if i in other_ship.indexes:
                         possible = False
@@ -51,9 +53,11 @@ class Player
             if possible:
                 self.ships.append(ship)
                 placed = True
-p=gracz()
+p=Player()
 for ship in p.ships:
     print(ship.indexes)
+
+    #18:46
 
 
 
