@@ -42,7 +42,7 @@ class Player:
                     #statki nie mogą zachowywać się jak snake
                     new_row = i // 10
                     new_col = i % 10
-                    if new_row != ship.row and new_col != ship.col:
+                    if (new_row != ship.row and new_col != ship.col) or (new_row >= 10 or new_col >= 10):
                         possible = False
                         break
                     #statki nie mogą na siebie nachodzić
