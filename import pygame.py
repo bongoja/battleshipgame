@@ -4,8 +4,9 @@ from ENGINEWYSYPKA import Game
 import pygame
 
 pygame.init()
-
+pygame.font.init()
 pygame.display.set_caption("Gra w statki")
+myfont = pygame.font.SysFont("fresansttf", 100)
 
 SQ_SIZE= 45
 H_MARGIN = SQ_SIZE * 4
@@ -15,6 +16,8 @@ WIDTH = SQ_SIZE * 10 * 2 + H_MARGIN
 HEIGHT = SQ_SIZE * 10 * 2 + V_MARGIN
 INDENT = 10
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
+HUMAN1 = False
+HUMAN2 = False 
 # kolory
 NIEBIESKI = (176, 196, 222)
 SZARY = (112, 128, 144)
@@ -50,7 +53,7 @@ def draw_ships(player, left = 0, top = 0):
         rectangle = pygame.Rect(x, y, width, height)
         pygame.draw.rect(SCREEN, GREEN, rectangle, border_radius = 15) 
 
-game = Game()
+game = Game(HUMAN1, HUMAN2)
 
 
 # pygame loop
@@ -67,26 +70,31 @@ while animating:
         # user clicks on mouse
         if event.type == pygame.MOUSEBUTTONDOWN:
             x,y = pygame.mouse.get_pos()
-            if game.player1_turn and x < SQ_SIZE*10 and y < SQ_SIZE*10:
+            if not game.over and game.player1_turn and x < SQ_SIZE*10 and y < SQ_SIZE*10:
                 row = y // SQ_SIZE
                 col = x // SQ_SIZE
                 index = row * 10 + col
                 game.make_move(index)
-            elif not game.player1_turn and x > WIDTH - SQ_SIZE*10 and y > SQ_SIZE*10 + V_MARGIN:
+            elif not game.over and not game.player1_turn and x > WIDTH - SQ_SIZE*10 and y > SQ_SIZE*10 + V_MARGIN:
                 row = (y - SQ_SIZE*10 - V_MARGIN) // SQ_SIZE
                 col = (x - SQ_SIZE*10 - H_MARGIN) // SQ_SIZE
                 index = row * 10 + col
-                game.make_move(index)            
+                game.make_move(index)  
+        # user presses key on keyboard          
         if event.type == pygame.KEYDOWN:
-
+            # escape key to close the animation
             if event.key == pygame.K_ESCAPE:
 
                 animating == False
 
+            # space bar to pause and unpause the animation
             if event.key == pygame.K_SPACE:
 
                 pausing = not pausing
 
+            # return key to restart the game
+            if event.key ==pygame.K_RETURN:
+                game = Game(HUMAN1, HUMAN2)
 
         if not pausing:
             SCREEN.fill(NIEBIESKI)
@@ -108,8 +116,18 @@ while animating:
         draw_ships(game.player1, top = (HEIGHT-V_MARGIN)//2 + V_MARGIN)
         draw_ships(game.player2, left = (WIDTH-H_MARGIN)//2 + H_MARGIN)
 
+        # computer moves
+        if not game.over and game.computer_turn:
+            game.random_ai()
+
+        # game over message
+        if game.over:
+            text = "Player " + str(game.result) + " wins!"
+            textbox = myfont.render(text, False, SZARY, NIEBIESKI)
+            SCREEN.blit(textbox, (WIDTH//2 - 240, HEIGHT// 2 - 50))
 
 
-        #update screen 1
-
+        #update screen 
+    
+        pygame.time.wait(10)
         pygame.display.flip()
