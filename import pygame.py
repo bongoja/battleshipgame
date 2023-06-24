@@ -17,7 +17,7 @@ HEIGHT = SQ_SIZE * 10 * 2 + V_MARGIN
 INDENT = 10
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 HUMAN1 = False
-HUMAN2 = False 
+HUMAN2 = False
 # kolory
 NIEBIESKI = (176, 196, 222)
 SZARY = (112, 128, 144)
@@ -70,12 +70,12 @@ while animating:
         # user clicks on mouse
         if event.type == pygame.MOUSEBUTTONDOWN:
             x,y = pygame.mouse.get_pos()
-            if not game.over and game.player1_turn and x < SQ_SIZE*10 and y < SQ_SIZE*10:
+            if  game.player1_turn and x < SQ_SIZE*10 and y < SQ_SIZE*10:
                 row = y // SQ_SIZE
                 col = x // SQ_SIZE
                 index = row * 10 + col
                 game.make_move(index)
-            elif not game.over and not game.player1_turn and x > WIDTH - SQ_SIZE*10 and y > SQ_SIZE*10 + V_MARGIN:
+            elif  not game.player1_turn and x > WIDTH - SQ_SIZE*10 and y > SQ_SIZE*10 + V_MARGIN:
                 row = (y - SQ_SIZE*10 - V_MARGIN) // SQ_SIZE
                 col = (x - SQ_SIZE*10 - H_MARGIN) // SQ_SIZE
                 index = row * 10 + col
@@ -118,7 +118,12 @@ while animating:
 
         # computer moves
         if not game.over and game.computer_turn:
-            game.random_ai()
+            if game.player1_turn:
+                game.basic_ai()
+            else:
+                game.basic_ai()
+           
+               
 
         # game over message
         if game.over:
