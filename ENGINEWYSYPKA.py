@@ -123,45 +123,45 @@ class Game:
    
    
     #Basic ai
-    def basic_ai(self):
+    def ai(self):
         #setup
         search = self.player1.search if self.player1_turn else self.player2.search
-        unknown = [i for i, square in enumerate(search) if square == "U"]
-        hits = [i for i, square in enumerate(search) if square == "H"]
-     #1.search in neighborhood of hits 
-        unknown_with_neighboring_hits = []  # lista plytek (te najblizsze) od uderzenia
-        unknown_with_neighboring_hits2 = [] # lista  drugich plytek  od uderzenia
+        niewiadome = [i for i, square in enumerate(search) if square == "U"]
+        trafienia = [i for i, square in enumerate(search) if square == "H"]
+     #1.search in neighborhood of trafienia 
+        niewiadome_z_sasiednimi_trafieniami = []  # lista plytek (te najblizsze) od uderzenia
+        niewiadome_z_sasiednimi_trafieniami2 = [] # lista  drugich plytek  od uderzenia
         
       
-        for u in unknown:
+        for n in niewiadome:
             #wyszukiwanie najblizszych plytek
-            if u+1 in hits or u-1 in hits or u-10 in hits or u+10 in hits:
-                unknown_with_neighboring_hits.append(u) #kopiowanie plytek do listy (level-1)
+            if n+1 in trafienia or n-1 in trafienia or n-10 in trafienia or n+10 in trafienia:
+                niewiadome_z_sasiednimi_trafieniami.append(n) #kopiowanie plytek do listy (level-1)
             
             #wyszukiwanie co drugiej plytki
-            if u+2 in hits or u-2 in hits or u-20 in hits or u+20 in hits:
-                unknown_with_neighboring_hits2.append(u) #kopiowanie co drugiej plyteki do listy (level-2)
+            if n+2 in trafienia or n-2 in trafienia or n-20 in trafienia or n+20 in trafienia:
+                niewiadome_z_sasiednimi_trafieniami2.append(n) #kopiowanie co drugiej plyteki do listy (level-2)
          
          # 1.1 pick "U" square with direct and level-2 neighbor both marked as"H"
-            for u in unknown: 
-                if u in unknown_with_neighboring_hits and u in unknown_with_neighboring_hits2:
-                    self.make_move(u) #robi ruchy po plytkach (level-1 ilevel-2 wokol trafienia 
+            for n in niewiadome: 
+                if n in niewiadome_z_sasiednimi_trafieniami and n in niewiadome_z_sasiednimi_trafieniami2:
+                    self.make_move(n) #robi ruchy po plytkach (level-1 ilevel-2 wokol trafienia 
                     return
 
 
          # 1.1 pick "U" square that has a level-1 neighbors marked as "H"
-            if len(unknown_with_neighboring_hits) > 0 :  
-                self.make_move(random.choice(unknown_with_neighboring_hits)) #robi ruchy po plytkach wokol (level-1)
+            if len(niewiadome_z_sasiednimi_trafieniami) > 0 :  
+                self.make_move(random.choice(niewiadome_z_sasiednimi_trafieniami)) #robi ruchy po plytkach wokol (level-1)
                 return 
         #2.checker board pattern - sprawdza co dwa - chyba ???
-        checker_board = []
-        row = u//10 #dzielenie całkowitoliczbowe - np 5 // 2 daje wynik 2, normalnie 2.5. | w tym wypadku chcemy uzyskac numer wiersza w ktorym znajduje sie unknow (pozycja pionowa)
+        co_drugi_element_lista = []
+        row = n//10 #dzielenie całkowitoliczbowe - np 5 // 2 daje wynik 2, normalnie 2.5. | w tym wypadku chcemy uzyskac numer wiersza w ktorym znajduje sie unknow (pozycja pionowa)
 
-        col = u % 10 #modulo - reszta z dzielenia | kolumna w ktorej jest uknown (pozycja pozioma) Indeksy na planszy o wymiarach 10x10 są liczone od 0 do 99, a dzięki temu obliczeniu można uzyskać numer kolumny od 0 do 9.
+        col = n % 10 #modulo - reszta z dzielenia | kolumna w ktorej jest uknown (pozycja pozioma) Indeksy na planszy o wymiarach 10x10 są liczone od 0 do 99, a dzięki temu obliczeniu można uzyskać numer kolumny od 0 do 9.
         if (row + col) % 2 == 0: #warunkuje zaznaczenie co 2
-            checker_board.append(u) #kopiuje co drugi kafel do checker_board
-        if len(checker_board)>0: 
-            self.make_move(random.choice(checker_board)) #robi ruchy po tej liście
+            co_drugi_element_lista.append(n) #kopiuje co drugi kafel do co_drugi_element_lista
+        if len(co_drugi_element_lista)>0: 
+            self.make_move(random.choice(co_drugi_element_lista)) #robi ruchy po tej liście
             return
         #3.random move
         self.random_ai()

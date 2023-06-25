@@ -119,9 +119,9 @@ while animating:
         # computer moves
         if not game.over and game.computer_turn:
             if game.player1_turn:
-                game.basic_ai()
+                game.ai()
             else:
-                game.basic_ai()
+                game.ai()
            
                
 
